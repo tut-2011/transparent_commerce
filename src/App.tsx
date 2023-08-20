@@ -1,7 +1,42 @@
 import React, { useState, useEffect } from "react";
 
 // Components
-import Navbar from "./components/Navbar";
+
+import Home from "./pages/Home/Home";
+import Category from "./pages/Category/Category";
+import Products from "./pages/Products/Products";
+import Navbar from "./components/Navbar/Navbar";
+import Footer from "./components/Footer/Footer";
+import "./App.scss";
+import { BrowserRouter, Outlet } from "react-router-dom";
+import { createBrowserRouter,RouterProvider,Route } from "react-router-dom";
+const Layout=()=>{
+  return(<div className="app"><Navbar/><Outlet/><Footer/></div>)
+}
+const router=createBrowserRouter(
+
+  [
+
+    {path:"/",
+    element:<Layout/>,
+    children:[{
+      path:"/",
+      element:<Home/>
+    },
+    {
+      path:"/category/:id",
+      element:<Category/>
+    },
+    {
+      path:"/products/:id",
+      element:<Products/>
+    },
+    ]
+ 
+    }
+  ]
+)
+
 import { buyTicketOperation, endGameOperation } from "./utils/operation";
 import { fetchStorage } from "./utils/tzkt";
 
@@ -54,34 +89,9 @@ throw error;
   };
 
   return (
-    <div className="h-100">
-      <Navbar />
-      <div className="d-flex flex-column justify-content-center align-items-center h-100">
-        {/* Ticket remaining display */}
-        <div className="py-1">Tickets remaining: {tickets}</div>
-        {/* Action Buttons */}
-        {tickets > 0 ? (
-          <button  onClick={onBuyTicket} className="btn btn-primary btn-lg">
-            {/* TODO 7.b - Call onBuyTicket on click */}
-            {/* TODO 7.c - Show "loading..." when buying operation is pending */}
-        {loading?"Loading..":"Buy Ticket"}
-          </button>
-        ) : (
-          <button  onClick={onEndGame} className="btn btn-success btn-lg">
-            {/* TODO 11.b - Call onEndGame on click */}
-            {/* TODO 11.c - Show "loading..." when buying operation is pending */}
-            {loading?"Loading..":"End Game"}
-          </button>
-        )}
-        {/* List of Players */}
-        <div className="mt-2">
-          {players.map((player, index) => (
-            <div key={index}>
-              <b>Ticket {index + 1}:</b> {player}
-            </div>
-          ))}
-        </div>
-      </div>
+    <div>
+     
+      < RouterProvider router={router}/>
     </div>
   );
 };

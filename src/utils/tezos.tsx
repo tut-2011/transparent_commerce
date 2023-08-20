@@ -1,7 +1,6 @@
 // TODO 1 - Setup Tezos Toolkit
 
 
-
 import {TezosToolkit} from "@taquito/taquito";
 import { wallet } from "./wallet";
 
